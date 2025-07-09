@@ -214,7 +214,27 @@
             margin: 2.5rem 0;
             flex-wrap: wrap;
         }
-        
+        .contact-info a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.contact-item {
+    /* 原有样式保持不变 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.8rem 1.5rem;
+    background: rgba(44, 62, 80, 0.6);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    cursor: pointer; /* 添加指针样式 */
+}
+
+.contact-item:hover {
+    background: rgba(52, 152, 219, 0.3);
+    transform: translateY(-3px);
+}
         .team {
             text-align: center;
             padding: 1.5rem 2rem;
@@ -351,22 +371,22 @@
                 <h2><i class="fas fa-tools"></i> 解决方案与进展</h2>
                 
                 <h3><i class="fas fa-wrench"></i> 紧急修复</h3>
-                <p>在确认问题后，我们已立即着手修复工作。目前，一个旨在解决此特定连接中断问题的 <strong>MPEM Mod 修复版本 v1.1.1-hotfix</strong> 已经发布。</p>
+                <p>在确认问题后，我们已立即着手修复工作。目前，一个旨在解决此特定连接中断问题的 <strong>MPEM Mod 修复版本 v2.1.5-hotfix</strong> 已经发布。</p>
                 
                 <h3><i class="fas fa-cloud-download-alt"></i> 更新途径</h3>
-                <p>修复版本已上传至 Mod 发布平台（CurseForge、Modrinth、GitHub等）。我们已第一时间将修复版本提供给"星遥工坊"团队。</p>
+                <p>修复版本已上传至 Mod 发布平台（Modrinth）。</p>
                 
                 <div class="solution-grid">
                     <div class="solution-card">
                         <i class="fas fa-sync-alt"></i>
                         <h4>整合包更新</h4>
-                        <p>请关注 [SST]刀剑异闻录 的后续更新通知，"星遥工坊"团队会尽快将修复版本集成到整合包中。</p>
+                        <p>请关注 [SST]刀剑异闻录 的后续更新通知</p>
                     </div>
                     
                     <div class="solution-card">
                         <i class="fas fa-download"></i>
                         <h4>手动更新</h4>
-                        <p>技术允许的情况下，可以手动移除旧版本 MPEM Mod，并替换为修复版本（v1.1.1-hotfix）。</p>
+                        <p>技术允许的情况下，可以手动移除旧版本 MPEM Mod，并替换为修复版本（v2.1.5-hotfix）。</p>
                     </div>
                     
                     <div class="solution-card">
@@ -387,10 +407,10 @@
                 <p>我们保证将吸取此次教训，在未来 Mod 的开发与测试中，<strong>更加严格地注重代码质量，尤其是多人游戏兼容性和边界情况测试</strong>。我们会投入更多精力进行更全面的测试，力求避免此类破坏性 Bug 的出现。</p>
                 
                 <div class="signature">
-                    <p>此致，敬礼</p>
+                    <p>此致</p>
                     <p><strong>SYMC 开发团队</strong></p>
                     <p>MPEM Mod 开发者</p>
-                    <div class="date">2023年10月15日</div>
+                    <div class="date">2025年7月9日</div>
                 </div>
             </div>
             
@@ -416,26 +436,22 @@
             
             <p>如果您在更新后仍然遇到问题，或有任何疑问，欢迎通过以下方式反馈：</p>
             
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fab fa-github"></i>
-                    <span>GitHub Issues</span>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fab fa-discord"></i>
-                    <span>Discord 服务器</span>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>support@symc-team.com</span>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fab fa-curseforge"></i>
-                    <span>CurseForge 页面</span>
-                </div>
+           <div class="contact-info">
+    <a href="https://2git.xyz/ShuyanMC/MPEM/issues" target="_blank" class="contact-item">
+        <i class="fab fa-github"></i>
+        <span>GitHub Issues</span>
+    </a>
+    
+    <a href="mailto:1149461164@qq.com" class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <span>1149461164@qq.com</span>
+    </a>
+    
+    <a href="https://modrinth.com/mod/mpem" target="_blank" class="contact-item">
+        <i class="fab fa-modrinth"></i>
+        <span>Modrinth 页面</span>
+    </a>
+</div>
             </div>
         </div>
     </div>
@@ -443,7 +459,7 @@
     <footer>
         <div class="container">
             <p>感谢大家的理解、耐心和宝贵的反馈。我们将努力重建信任，让 MPEM Mod 成为一个稳定可靠的优化选择。</p>
-            <p>© 2023 SYMC 团队 | MPEM Mod 项目组 | 保留所有权利</p>
+            <p>© 2025 SYMC 团队 | MPEM Mod 项目组 | 保留所有权利</p>
         </div>
     </footer>
 </body>

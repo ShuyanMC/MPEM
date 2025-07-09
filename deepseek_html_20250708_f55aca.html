@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPEM Mod致歉声明 - SYMC团队</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a2530;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #1a2a3a, #0c1825);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+CiAgPHBhdGggZD0iTTAgMEg1MFY1MEgwWiIgZmlsbD0ibm9uZSIvPgogIDxjaXJjbGUgY3g9IjI1IiBjeT0iMjUiIHI9IjEiIGZpbGw9IiMzMzQ0NTUiIGZpbGwtb3BhY2l0eT0iMC4xIi8+Cjwvc3ZnPg==');
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 3px solid var(--light);
+        }
+        
+        .logo i {
+            font-size: 3.5rem;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--success));
+            border-radius: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+            color: #bdc3c7;
+        }
+        
+        .card {
+            background: rgba(30, 40, 50, 0.8);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary), var(--success));
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 i {
+            background: rgba(52, 152, 219, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+        }
+        
+        .highlight {
+            background: rgba(231, 76, 60, 0.15);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+        
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .solution-card {
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-5px);
+            background: rgba(52, 73, 94, 0.7);
+        }
+        
+        .solution-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--success);
+        }
+        
+        .solution-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .team-logo {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .team {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: rgba(44, 62, 80, 0.5);
+            border-radius: 10px;
+            min-width: 200px;
+        }
+        
+        .team h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .team p {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--light);
+        }
+        
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 0 0.3rem;
+            vertical-align: middle;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.8rem 1.5rem;
+            background: rgba(44, 62, 80, 0.6);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(52, 152, 219, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .contact-item i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            color: #95a5a6;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .date {
+            text-align: right;
+            margin-top: 1rem;
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .card {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .team-logo {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-code"></i>
+            </div>
+            <h1>MPEM Mod 致歉声明</h1>
+            <p class="subtitle">关于在 [SST]刀剑异闻录 整合包中出现多人游戏连接问题的说明</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2><i class="fas fa-exclamation-triangle"></i> 问题说明</h2>
+                
+                <p>尊敬的 [SST]刀剑异闻录 玩家们，以及整合包作者 <strong>"星遥工坊"团队</strong>：</p>
+                
+                <p>我们是 <strong>MPEM Mod</strong> 的开发团队 <strong>SYMC</strong>。在此，我们怀着深深的歉意，就近期由我们的 Mod 在 [SST]刀剑异闻录 整合包中引发的一个严重问题，向所有受影响的玩家、整合包作者以及整个社区，致以最诚挚的道歉。</p>
+                
+                <div class="highlight">
+                    <p><i class="fas fa-bug"></i> <strong>问题描述：</strong> 在多人游戏中，玩家对实体（如生物、矿车、船等）进行互动操作时，会触发导致玩家被强制踢出服务器连接的严重错误。经过排查与分析，现已明确此问题根源在于我们开发的 <strong>MPEM Mod</strong>。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-users"></i> 影响与责任</h2>
+                
+                <h3><i class="fas fa-gamepad"></i> 对玩家造成的影响</h3>
+                <p>该问题直接导致玩家在享受多人游戏时遭遇频繁断线，破坏了游戏体验，浪费了宝贵时间。对此，我们深感愧疚。</p>
+                
+                <h3><i class="fas fa-hands-helping"></i> 对整合包作者的影响</h3>
+                <p>我们的 Mod 出现问题，直接影响了 [SST]刀剑异闻录 整合包的稳定性和声誉，辜负了"星遥工坊"团队对我们的信任和选用。我们对此造成的不良影响负全部责任。</p>
+                
+                <h3><i class="fas fa-globe"></i> 对社区的影响</h3>
+                <p>此类问题损害了模组社区追求稳定和乐趣的体验，我们对此感到非常抱歉。</p>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-tools"></i> 解决方案与进展</h2>
+                
+                <h3><i class="fas fa-wrench"></i> 紧急修复</h3>
+                <p>在确认问题后，我们已立即着手修复工作。目前，一个旨在解决此特定连接中断问题的 <strong>MPEM Mod 修复版本 v1.1.1-hotfix</strong> 已经发布。</p>
+                
+                <h3><i class="fas fa-cloud-download-alt"></i> 更新途径</h3>
+                <p>修复版本已上传至 Mod 发布平台（CurseForge、Modrinth、GitHub等）。我们已第一时间将修复版本提供给"星遥工坊"团队。</p>
+                
+                <div class="solution-grid">
+                    <div class="solution-card">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>整合包更新</h4>
+                        <p>请关注 [SST]刀剑异闻录 的后续更新通知，"星遥工坊"团队会尽快将修复版本集成到整合包中。</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <i class="fas fa-download"></i>
+                        <h4>手动更新</h4>
+                        <p>技术允许的情况下，可以手动移除旧版本 MPEM Mod，并替换为修复版本（v1.1.1-hotfix）。</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <i class="fas fa-search"></i>
+                        <h4>深入分析</h4>
+                        <p>我们正在深入分析导致此 Bug 的根本原因，以避免类似问题在未来再次发生。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-comments"></i> 诚挚道歉与保证</h2>
+                
+                <p>我们再次向所有因此问题而遭受糟糕游戏体验的玩家们表示最深的歉意。你们的反馈是改进的动力。</p>
+                
+                <p>特别向"星遥工坊"团队道歉。感谢您选择使用 MPEM Mod，却因我们的疏忽给您和您的用户带来了麻烦，实在对不起。</p>
+                
+                <p>我们保证将吸取此次教训，在未来 Mod 的开发与测试中，<strong>更加严格地注重代码质量，尤其是多人游戏兼容性和边界情况测试</strong>。我们会投入更多精力进行更全面的测试，力求避免此类破坏性 Bug 的出现。</p>
+                
+                <div class="signature">
+                    <p>此致，敬礼</p>
+                    <p><strong>SYMC 开发团队</strong></p>
+                    <p>MPEM Mod 开发者</p>
+                    <div class="date">2023年10月15日</div>
+                </div>
+            </div>
+            
+            <div class="team-logo">
+                <div class="team">
+                    <h4>MOD 开发团队</h4>
+                    <p><i class="fas fa-code"></i> SYMC 团队</p>
+                    <p>MPEM Mod</p>
+                </div>
+                
+                <div class="team">
+                    <h4>整合包团队</h4>
+                    <p><i class="fas fa-cubes"></i> 星遥工坊</p>
+                    <p>[SST]刀剑异闻录</p>
+                </div>
+            </div>
+        </main>
+        
+        <div class="card">
+            <h2><i class="fas fa-envelope"></i> 后续沟通</h2>
+            
+            <p>关于此 Bug 的修复进展和 Mod 的后续更新，我们将持续在 MPEM Mod 发布页进行公告。</p>
+            
+            <p>如果您在更新后仍然遇到问题，或有任何疑问，欢迎通过以下方式反馈：</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub Issues</span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord 服务器</span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>support@symc-team.com</span>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-curseforge"></i>
+                    <span>CurseForge 页面</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>感谢大家的理解、耐心和宝贵的反馈。我们将努力重建信任，让 MPEM Mod 成为一个稳定可靠的优化选择。</p>
+            <p>© 2023 SYMC 团队 | MPEM Mod 项目组 | 保留所有权利</p>
+        </div>
+    </footer>
+</body>
+</html>

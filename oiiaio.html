@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
     <script>
-        // 主窗口 URL
-        const mainUrl = "https://www.bilibili.com/video/BV1btJHzGEUE";
-        // 检测间隔（毫秒）
-        const checkInterval = 3000;
+        // 使用BroadcastChannel进行跨标签通信
+        const channel = new BroadcastChannel('player_monitor');
         
-        // 检查主窗口是否关闭，如果关闭则重新打开
-        function checkMainWindow() {
-            try {
-                // 检查 opener（主窗口）是否已关闭
-                if (!window.opener || window.opener.closed) {
-                    window.open(mainUrl, "_blank", "width=100,height=100,left=-1000,top=-1000");
-                }
-            } catch (e) {
-                // 如果无法访问 opener（如跨域限制），则直接打开新窗口
-                window.open(mainUrl, "_blank", "width=100,height=100,left=-1000,top=-1000");
+        // 存储最后活跃时间
+        let lastActive = Date.now();
+        
+        // 监听主窗口心跳
+        channel.onmessage = (e) => {
+            if (e.data === 'heartbeat') {
+                lastActive = Date.now();
             }
-        }
-
-        // 启动定时检测
-        setInterval(checkMainWindow, checkInterval);
+        };
         
-        // 隐藏当前页面（防止被看到）
-        document.body.style.display = "none";
+        // 每10秒检查一次主窗口
+        setInterval(() => {
+            channel.postMessage('check_alive');
+            
+            // 如果30秒无响应，恢复主窗口
+            if (Date.now() - lastActive > 30000) {
+                window.open(
+                    '/',
+                    '_main',
+                    'width=100,height=100,left=-1000,top=-1000'
+                );
+                lastActive = Date.now();
+            }
+        }, 10000);
+        
+        // 隐藏当前页面
+        document.body.style.display = 'none';
+        
+        // 初始发送一次检查
+        channel.postMessage('check_alive');
     </script>
 </head>
-<body>
-    <!-- 空页面，不显示任何内容 -->
-</body>
+<body></body>
 </html>

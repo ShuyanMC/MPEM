@@ -1,0 +1,48 @@
+{
+  "required": true,
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "package": "net.shuyanmc.mpem.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.mpem.refmap.json",
+  "server": [
+    "DFUKILLER",
+    "MixinBoat",
+    "LevelMixin",
+    "ItemStackMixin",
+    "InventoryMixin",
+    "ItemEntityMixin",
+    "EntityTypeMixin",
+    "MixinServerLevel",
+    "EventListenerTransformerMixin"
+  ],
+  "client": [
+    "uimixin",
+    "mcmixinx",
+    "DFUKILLER",
+    "MixinBoat",
+    "LevelMixin",
+    "ItemStackMixin",
+    "MixinPoseStack",
+    "InventoryMixin",
+    "ItemEntityMixin",
+    "EntityTypeMixin",
+    "client.FastBamboo",
+    "MixinVertexConsumer",
+    "client.OptionsMixin",
+    "EnchantmentMenuMixin",
+    "MixinEnchantmentMenu",
+    "client.MinecraftMixin",
+    "client.LeafRenderMixin",
+    "client.MixinWorldRenderer",
+    "client.EntityRendererMixin",
+    "EventListenerTransformerMixin",
+    "client.OptimizedChestRenderer",
+    "client.OptimizedChestBlockMixin",
+    "client.OptimizedEnderChestMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1,
+    "maxShiftBy": 5
+  }
+}

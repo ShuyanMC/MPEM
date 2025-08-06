@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[0,)"
+license="MIT License"
+
+[[mods]]
+modId="mpem"
+version="3.0.3"
+displayName="Moonlit Performance Enhancement Module"
+displayURL="https://guide.ccngo.top"
+credits="Created using mod maker IJ"
+authors="ShuyanMC,ZCRAFT"
+logoFile = "mpem.png"
+# Start of user code block mod configuration
+# End of user code block mod configuration
+
+[[dependencies.mpem]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.7.10,1.22]"
+    ordering="AFTER"
+    side="BOTH"
+
+
+
+
+# Start of user code block dependencies configuration
+# End of user code block dependencies configuration
